@@ -57,6 +57,9 @@ Token* Scanner::nextToken() {
   string lex;
   Token::Type ttype;
   c = nextChar();
+  if (c=='%'){  //para ignorar comentarios
+    while (c!='\n') c=nextChar();
+  }
   while (c == ' ') c = nextChar();
   if (c == '\0') return new Token(Token::END);
   startLexema();
