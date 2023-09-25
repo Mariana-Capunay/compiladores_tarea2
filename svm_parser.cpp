@@ -159,7 +159,17 @@ Instruction::IType Token::tokenToIType(Token::Type tt) {
   case(Token::SUB): itype = Instruction::ISUB; break;
   case(Token::MUL): itype = Instruction::IMUL; break;
   case(Token::DIV): itype = Instruction::IDIV; break;
-    // completar
+  case(Token::SWAP): itype = Instruction::ISWAP; break;
+  case(Token::PRINT): itype = Instruction::IPRINT; break;
+  case(Token::SKIP): itype = Instruction::ISKIP; break;
+  case(Token::STORE): itype = Instruction::ISTORE; break;
+  case(Token::LOAD): itype = Instruction::ILOAD; break;
+  case(Token::GOTO): itype = Instruction::IGOTO; break;
+  case(Token::JMPEQ): itype = Instruction::IJMPEQ; break;
+  case(Token::JMPGT): itype = Instruction::IJMPGT; break;
+  case(Token::JMPGE): itype = Instruction::IJMPGE; break;
+  case(Token::JMPLT): itype = Instruction::IJMPLT; break;
+  case(Token::JMPLE): itype = Instruction::IJMPLE; break;
   default: cout << "Error: Unknown Keyword type" << endl; exit(0);
   }
   return itype;
@@ -219,7 +229,7 @@ SVM* Parser::parse() {
   while (current->type != Token::END) {
     instr = parseInstruction();
     sl.push_back(instr);
-    // que hacemos con la instruccion?
+    // que hacemos con la instruccion? 
   }  
   if (current->type != Token::END) {
     cout << "Esperaba fin-de-input, se encontro " << current << endl;
@@ -238,15 +248,14 @@ Instruction* Parser::parseInstruction() {
   
   // match label, si existe
 
-
-  if (match(Token::POP) || match(Token::ADD) ) {  // mas casos
+  if (match(Token::POP) || match(Token::ADD) || match(Token::SUB) || match(Token::MUL) || match(Token::DIV) || match(Token::DUP) || match(Token::SWAP) || match(Token::PRINT) || match(Token::SKIP) ) {
     tipo = 0;
     ttype = previous->type;
-  } else if (match(Token::PUSH) || match(Token::STORE)) { // mas casos
+  } else if (match(Token::PUSH) || match(Token::STORE) || match(Token::LOAD)) {
     tipo = 1;
     ttype = previous->type;
     
-  } else if (match(Token::GOTO) ) { // mas casos
+  } else if (match(Token::GOTO) || match(Token::JMPEQ) || match(Token::JMPGT) || match(Token::JMPGE) || match(Token::JMPLT) || match(Token::JMPLE) ) { 
     tipo = 2;
     ttype = previous->type;
     
@@ -263,10 +272,10 @@ Instruction* Parser::parseInstruction() {
 
   if (tipo == 0) {
     instr = new Instruction(label, Token::tokenToIType(ttype));
-  } else if (tipo == 2) {
-    //instr = 
-  } else { //
-    //instr =
+  } else if (tipo == 2) { // usan un label(id) como argumento
+    instr = new Instruction(label, Token::tokenToIType(ttype), jmplabel);
+  } else { // usan un numero como argumento
+    instr = new Instruction(label, Token::tokenToIType(ttype), atoi(previous->lexema.c_str())); 
   }
 			   
 

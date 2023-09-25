@@ -36,7 +36,7 @@ SVM::SVM(list<Instruction*>& sl) {
     }
   }
   
-
+  
 					   
 }
 

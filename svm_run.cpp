@@ -11,7 +11,7 @@
 
 int main(int argc, const char* argv[]) {
 
-  bool useparser = false;
+  bool useparser = true;
   SVM* svm;
 
   if (useparser) {
@@ -27,9 +27,9 @@ int main(int argc, const char* argv[]) {
 
   // our scanner takes strings
   Scanner scanner(buffer.str());
-  
   Parser parser(&scanner);
   svm = parser.parse();
+  cout << "Scanning ...." << endl;
 
   // test scanner
 
