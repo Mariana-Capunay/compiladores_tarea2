@@ -1,4 +1,4 @@
 # Integrantes
 
-## Mariana Capuñay
-## Mariajulia Romani
+* Mariana Capuñay
+* Mariajulia Romani
