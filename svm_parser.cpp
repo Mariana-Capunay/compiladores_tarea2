@@ -59,6 +59,7 @@ Token* Scanner::nextToken() {
   c = nextChar();
   if (c=='%'){  //para ignorar comentarios
     while (c!='\n') c=nextChar();
+    c = nextChar();
   }
   while (c == ' ') c = nextChar();
   if (c == '\0') return new Token(Token::END);
@@ -170,6 +171,7 @@ Instruction::IType Token::tokenToIType(Token::Type tt) {
   case(Token::JMPGE): itype = Instruction::IJMPGE; break;
   case(Token::JMPLT): itype = Instruction::IJMPLT; break;
   case(Token::JMPLE): itype = Instruction::IJMPLE; break;
+  //case(Token::NUM): itype = Instruction::INUM; break;
   default: cout << "Error: Unknown Keyword type" << endl; exit(0);
   }
   return itype;
@@ -244,20 +246,32 @@ Instruction* Parser::parseInstruction() {
   string label = "";
   string jmplabel;
   Token::Type ttype;
+  int num;
   int tipo = 0; // 0 no args, 1 un arg entero,  1 un arg label
   
   // match label, si existe
-
+  if (match(Token::LABEL)){
+    // cout<<"Label:  previoustype: " <<previous->type<<" - current-type: ";
+    // cout<<current->type<<endl;
+    label = previous->lexema;
+  }
+  //cout<<current->;
+  
   if (match(Token::POP) || match(Token::ADD) || match(Token::SUB) || match(Token::MUL) || match(Token::DIV) || match(Token::DUP) || match(Token::SWAP) || match(Token::PRINT) || match(Token::SKIP) ) {
     tipo = 0;
     ttype = previous->type;
   } else if (match(Token::PUSH) || match(Token::STORE) || match(Token::LOAD)) {
     tipo = 1;
     ttype = previous->type;
+    //cout<<current->lexema<<"here";
+    num = atoi(current->lexema.c_str());
+    current = scanner->nextToken();
     
   } else if (match(Token::GOTO) || match(Token::JMPEQ) || match(Token::JMPGT) || match(Token::JMPGE) || match(Token::JMPLT) || match(Token::JMPLE) ) { 
     tipo = 2;
     ttype = previous->type;
+    jmplabel = current->lexema;
+    current = scanner->nextToken();
     
   } else {
     cout << "Error: no pudo encontrar match para " << current << endl;  
@@ -272,13 +286,15 @@ Instruction* Parser::parseInstruction() {
 
   if (tipo == 0) {
     instr = new Instruction(label, Token::tokenToIType(ttype));
+    cout<< "Instruccion:" << "label: " << label << " - tipo: " << ttype << endl;
+
   } else if (tipo == 2) { // usan un label(id) como argumento
     instr = new Instruction(label, Token::tokenToIType(ttype), jmplabel);
+    cout<< "Instruccion:" << "label" << label << " - tipo: " << ttype << " - jmplabel: " << jmplabel << endl;
   } else { // usan un numero como argumento
-    instr = new Instruction(label, Token::tokenToIType(ttype), atoi(previous->lexema.c_str())); 
+    instr = new Instruction(label, Token::tokenToIType(ttype), num); 
+    cout<< "Instruccion:" << "label" << label << " - tipo: " << ttype << " - numero: " << atoi(previous->lexema.c_str()) << endl;
   }
-			   
-
   return instr;
 }
 
