@@ -11,7 +11,7 @@
 
 int main(int argc, const char* argv[]) {
 
-  bool useparser = false;
+  bool useparser = true;
   SVM* svm;
 
   if (useparser) {
@@ -50,6 +50,7 @@ int main(int argc, const char* argv[]) {
 
     list<Instruction*> sl;
     // programa 1
+    /*
     sl.push_back(new Instruction("",Instruction::IPUSH, 30));
     sl.push_back(new Instruction("",Instruction::IPUSH, 3));
     sl.push_back(new Instruction("",Instruction::IDIV));
@@ -62,24 +63,25 @@ int main(int argc, const char* argv[]) {
     sl.push_back(new Instruction("",Instruction::IGOTO, "LEND")); // 9
     sl.push_back(new Instruction("L20",Instruction::IPUSH, 20));
     sl.push_back(new Instruction("LEND",Instruction::ISKIP));
+    */
 /*
   */ 
     // programa 2
     
-    // sl.push_back(new Instruction("",Instruction::IPUSH, 6));
-    // sl.push_back(new Instruction("",Instruction::ISTORE, 5));
-    // sl.push_back(new Instruction("",Instruction::IPUSH, 0));  
-    // sl.push_back(new Instruction("LENTRY",Instruction::ILOAD, 5));
-    // sl.push_back(new Instruction("",Instruction::IPUSH, 0));
-    // sl.push_back(new Instruction("",Instruction::IJMPLE, "LEND"));
-    // sl.push_back(new Instruction("",Instruction::ILOAD, 5));
-    // sl.push_back(new Instruction("",Instruction::IADD, 0));
-    // sl.push_back(new Instruction("",Instruction::ILOAD, 5));
-    // sl.push_back(new Instruction("",Instruction::IPUSH, 1));
-    // sl.push_back(new Instruction("",Instruction::ISUB));
-    // sl.push_back(new Instruction("",Instruction::ISTORE, 5));
-    // sl.push_back(new Instruction("",Instruction::IGOTO, "LENTRY"));
-    // sl.push_back(new Instruction("LEND",Instruction::ISKIP));
+     sl.push_back(new Instruction("",Instruction::IPUSH, 6));
+     sl.push_back(new Instruction("",Instruction::ISTORE, 5));
+     sl.push_back(new Instruction("",Instruction::IPUSH, 0));  
+     sl.push_back(new Instruction("LENTRY",Instruction::ILOAD, 5));
+     sl.push_back(new Instruction("",Instruction::IPUSH, 0));
+     sl.push_back(new Instruction("",Instruction::IJMPLE, "LEND"));
+     sl.push_back(new Instruction("",Instruction::ILOAD, 5));
+     sl.push_back(new Instruction("",Instruction::IADD, 0));
+     sl.push_back(new Instruction("",Instruction::ILOAD, 5));
+     sl.push_back(new Instruction("",Instruction::IPUSH, 1));
+     sl.push_back(new Instruction("",Instruction::ISUB));
+     sl.push_back(new Instruction("",Instruction::ISTORE, 5));
+     sl.push_back(new Instruction("",Instruction::IGOTO, "LENTRY"));
+     sl.push_back(new Instruction("LEND",Instruction::ISKIP));
      
     
     svm = new SVM(sl);

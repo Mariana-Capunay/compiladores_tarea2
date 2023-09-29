@@ -254,6 +254,8 @@ Instruction* Parser::parseInstruction() {
     // cout<<"Label:  previoustype: " <<previous->type<<" - current-type: ";
     // cout<<current->type<<endl;
     label = previous->lexema;
+    cout<<"Label: "<<label<<endl;
+
   }
   //cout<<current->;
   
@@ -291,7 +293,7 @@ Instruction* Parser::parseInstruction() {
   } else if (tipo == 2) { // usan un label(id) como argumento
     instr = new Instruction(label, Token::tokenToIType(ttype), jmplabel);
     cout<< "Instruccion:" << "label" << label << " - tipo: " << ttype << " - jmplabel: " << jmplabel << endl;
-  } else { // usan un numero como argumento
+  } else if (tipo==1){ // usan un numero como argumento
     instr = new Instruction(label, Token::tokenToIType(ttype), num); 
     cout<< "Instruccion:" << "label" << label << " - tipo: " << ttype << " - numero: " << atoi(previous->lexema.c_str()) << endl;
   }
