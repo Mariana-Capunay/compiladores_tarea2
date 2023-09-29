@@ -171,7 +171,6 @@ Instruction::IType Token::tokenToIType(Token::Type tt) {
   case(Token::JMPGE): itype = Instruction::IJMPGE; break;
   case(Token::JMPLT): itype = Instruction::IJMPLT; break;
   case(Token::JMPLE): itype = Instruction::IJMPLE; break;
-  //case(Token::NUM): itype = Instruction::INUM; break;
   default: cout << "Error: Unknown Keyword type" << endl; exit(0);
   }
   return itype;
@@ -251,13 +250,8 @@ Instruction* Parser::parseInstruction() {
   
   // match label, si existe
   if (match(Token::LABEL)){
-    // cout<<"Label:  previoustype: " <<previous->type<<" - current-type: ";
-    // cout<<current->type<<endl;
     label = previous->lexema;
-    cout<<"Label: "<<label<<endl;
-
   }
-  //cout<<current->;
   
   if (match(Token::POP) || match(Token::ADD) || match(Token::SUB) || match(Token::MUL) || match(Token::DIV) || match(Token::DUP) || match(Token::SWAP) || match(Token::PRINT) || match(Token::SKIP) ) {
     tipo = 0;
@@ -265,7 +259,6 @@ Instruction* Parser::parseInstruction() {
   } else if (match(Token::PUSH) || match(Token::STORE) || match(Token::LOAD)) {
     tipo = 1;
     ttype = previous->type;
-    //cout<<current->lexema<<"here";
     num = atoi(current->lexema.c_str());
     current = scanner->nextToken();
     
@@ -288,14 +281,11 @@ Instruction* Parser::parseInstruction() {
 
   if (tipo == 0) {
     instr = new Instruction(label, Token::tokenToIType(ttype));
-    cout<< "Instruccion:" << "label: " << label << " - tipo: " << ttype << endl;
 
   } else if (tipo == 2) { // usan un label(id) como argumento
     instr = new Instruction(label, Token::tokenToIType(ttype), jmplabel);
-    cout<< "Instruccion:" << "label" << label << " - tipo: " << ttype << " - jmplabel: " << jmplabel << endl;
   } else if (tipo==1){ // usan un numero como argumento
     instr = new Instruction(label, Token::tokenToIType(ttype), num); 
-    cout<< "Instruccion:" << "label" << label << " - tipo: " << ttype << " - numero: " << atoi(previous->lexema.c_str()) << endl;
   }
   return instr;
 }

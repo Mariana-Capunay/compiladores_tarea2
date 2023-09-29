@@ -29,7 +29,6 @@ int main(int argc, const char* argv[]) {
   Scanner scanner(buffer.str());
   Parser parser(&scanner);
   svm = parser.parse();
-  cout << "Scanning ...." << endl;
 
   // test scanner
 
