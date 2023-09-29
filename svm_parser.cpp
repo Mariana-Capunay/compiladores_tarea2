@@ -57,7 +57,7 @@ Token* Scanner::nextToken() {
   string lex;
   Token::Type ttype;
   c = nextChar();
-  if (c=='%'){  //para ignorar comentarios
+  while (c=='%'){  //para ignorar comentarios
     while (c!='\n') c=nextChar();
     c = nextChar();
   }

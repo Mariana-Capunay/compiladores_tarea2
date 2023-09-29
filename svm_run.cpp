@@ -24,7 +24,7 @@ int main(int argc, const char* argv[]) {
   std::ifstream t(argv[1]);
   std::stringstream buffer;
   buffer << t.rdbuf();
-
+  //cout<<buffer.str();
   // our scanner takes strings
   Scanner scanner(buffer.str());
   Parser parser(&scanner);

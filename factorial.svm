@@ -1,7 +1,19 @@
-% Nombre, apellido
-% Nombre, apellido
-% Nombre, apellido
+% Capuñay, Mariana
+% Romani, Mariajulia
 push 6
 % codigo que calcula el factorial del valor arriba de la pila
 % en este caso, 6!
+store 5
+push 1
+LENTRY: load 5
+push 0
+jmple LEND
+load 5
+mul
+load 5
+push 1
+sub
+store 5
+goto LENTRY
+LEND: skip
 
